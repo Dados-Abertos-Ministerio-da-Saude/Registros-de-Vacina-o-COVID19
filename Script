@@ -1,0 +1,35 @@
+#pip install duckdb
+
+import duckdb
+import time
+import pandas as pd
+con = duckdb.connect()
+
+# Vamos ver o tempo de leitura do arquivo:
+
+start_time = time.monotonic()
+
+#df = con.from_csv_auto('C:\\Seu\\Diretorio\\COM\\ARQUIVO.CSV')
+
+sql = """ SELECT vacina_dataaplicacao,
+      estabelecimento_uf,
+      estabelecimento_municipio_nome,
+      vacina_descricao_dose,
+      vacina_nome, COUNT(*) AS NUM
+      FROM my_name_for_df
+      GROUP BY vacina_dataaplicacao,
+      estabelecimento_uf,
+      estabelecimento_municipio_nome,
+      vacina_descricao_dose,
+      vacina_nome 
+      ORDER BY vacina_dataaplicacao ASC"""
+
+
+#con.execute('PRAGMA threads=2')
+
+res = df.query('my_name_for_df', sql)
+
+res.df().to_csv('C:\\Seu\\Diretorio\\para\\escrever.csv', index = False)
+
+time.monotonic() - start_time
+
